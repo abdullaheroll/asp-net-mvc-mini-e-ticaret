@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid ">
+    @ViewBag.kategorilist
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Siparişler -->
+        <div class="col-xl-3 col-md-5 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Siparişler
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.topSiparis</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ürünler -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Ürünler
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.topUrun</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kullanıcılar -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Kullanıcılar
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@ViewBag.topKullanici</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toplam Satış -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Toplam Satış
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.topSatis₺</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid ">
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-danger">Son Siparişler</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped-columns" id="myTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Sipariş ID</th>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">E-posta</th>
+                                    <th class="text-center">Ürün</th>
+                                    <th class="text-center">Fiyat</th>
+                                    <th class="text-center">Teslimat Adresi</th>
+                                    <th class="text-center">Fatura Adresi</th>
+                                    <th class="text-center">Sipariş Tarihi</th>
+                                    <th class="text-center">Sipariş Durumu</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center">Sipariş ID</th>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">E-posta</th>
+                                    <th class="text-center">Ürün</th>
+                                    <th class="text-center">Fiyat</th>
+                                    <th class="text-center">Teslimat Adresi</th>
+                                    <th class="text-center">Fatura Adresi</th>
+                                    <th class="text-center">Sipariş Tarihi</th>
+                                    <th class="text-center">Sipariş Durumu</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                               @{ 
+                                   Html.RenderAction("PartialSonSiparisler", "YtPanel");
+                               }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@model AbdullahErolEticaret.Models.UrunlerT
+@{
+    ViewBag.Title = "UrunDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.UrunGorselURL" alt="..." style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);" /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: BST-498 | <a href="/home/kategoridetay">@Model.KategoriAdi</a> Kategorisinde</div>
+                <h1 class="display-5 fw-bolder">@Model.UrunAdi</h1>
+                <div class="fs-5 mb-5">
+                    <span class="text-decoration-line-through">Fiyat: @Model.Fiyat₺</span>
+                    <br>
+                    <span class="text-decoration-line-through">Stokta Kalan:</span>
+                    <span>@Model.StokAdet</span>
+                </div>
+                <p class="lead">@Model.UrunAciklamasi</p>
+                @if (Session["kullaniciId"] != null)
+                {
+                    <div class="d-flex">
+                        <a href="/home/SiparisOlusturma/@Model.urunID" class="btn btn-outline-dark flex-shrink-1">
+                            Satın Al
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <span class="text-danger h5">Satın Alım için önce giriş yapmanız lazım.</span>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">Vitrindeki Diğer Ürünler</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @{ 
+                Html.RenderAction("DigerUrunler", "Home");
+            }
+
+        </div>
+    </div>
+</section>

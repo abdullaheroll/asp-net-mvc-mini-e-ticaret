@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.UrunlerT>
+@{
+    ViewBag.Title = "KategoriDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="py-5">
+    <h3 class="text-center text-danger"><b class="text-dark">@ViewBag.katAdi </b>Kategorisindeki Ürünler</h3>
+    <p class="text-center h6">@ViewBag.katAciklama</p>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <a href="/home/urundetay/@item.urunID">
+                            <img class="card-img-top" src="@item.UrunGorselURL" alt="Card image cap" height="250">
+                        </a>
+                        <div class="card-body">
+
+                            <h5 class="card-title">@item.UrunAdi</h5>
+                            @if (item.UrunAciklamasi.Length > 50)
+                            {
+                                <p class="card-text">@item.UrunAciklamasi.Substring(0, 50)...</p>
+                            }
+                            else
+                            {
+                                <p class="card-text">@item.UrunAciklamasi</p>
+                            }
+                            <h5 class="card-title text-info">@item.Fiyat₺</h5>
+                            <a href="/home/urundetay/@item.urunID" class="btn btn-outline-success">Ürüne Git</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+

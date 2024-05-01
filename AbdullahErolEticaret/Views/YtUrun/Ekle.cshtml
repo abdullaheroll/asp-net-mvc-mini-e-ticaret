@@ -1,0 +1,80 @@
+﻿@model AbdullahErolEticaret.Models.UrunlerT
+
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+
+
+
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Ürün Ekle</h4>
+            <hr />
+            @Html.Raw(ViewBag.msg)
+
+            <form action="/yturun/ekle" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="col-md-2 form-label">Ürün Adı</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="UrunAdi" maxlength="500" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" form-label col-md-2">Ürün Açıklaması</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="UrunAciklamasi" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <label class="form-label col-md-2">Ürün Fiyatı</label>
+                        <input type="text" class="form-control" name="Fiyat"  />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <label class="control-label col-md-3">Stok Adeti</label>
+                        <input type="text" class="form-control" name="StokAdet" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label col-md-2">Ürün Görseli</label>
+                    <div class="col-md-10">
+                        <input type="file" class="form-control" name="Gorsel" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label col-md-2">Kategori</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("KategoriID", ViewBag.kategorilist as List<SelectListItem>, "Kategori Seçiniz", new { @class = "form-control" })
+                        @*Html.DropDownList("KategoriID", (IEnumerable<SelectListItem>)ViewBag.kategorilist, new { @class = "form-control" })*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 pt-3">
+                        <button type="submit" class="btn btn-success">Ürünü Ekle</button> |
+                        <a href="/yturun" class="btn btn-light">Geri Dön</a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+

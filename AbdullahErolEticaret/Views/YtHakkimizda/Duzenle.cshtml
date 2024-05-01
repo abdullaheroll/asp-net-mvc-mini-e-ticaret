@@ -1,0 +1,54 @@
+﻿@model AbdullahErolEticaret.Models.HakkimizdaT
+@{
+    ViewBag.Title = "Duzenle";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Hakkımızda Alanını Düzenle</h4>
+            <hr />
+            @Html.Raw(ViewBag.msg)
+
+        <form action="/ythakkimizda/duzenle/@Model.HakkimizdaID" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-md-2 form-label">Başlık</label>
+                <input type="hidden" name="HakkimizdaID" value="@Model.HakkimizdaID" />
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="Baslik" value="@Model.Baslik" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class=" form-label col-md-2">İçerik</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" name="Icerik" rows="10">@Model.Icerik</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class=" form-label col-md-2">Görsel</label>
+                <div class="col-md-10">
+                    <input type="file" class="form-control" name="Gorsel" accept=".jpg,.jpeg,.png"/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 pt-3">
+                    <button type="submit" class="btn btn-success">Kaydet</button> |
+                    <a href="/ythakkimizda" class="btn btn-light">Geri Dön</a>
+                </div>
+
+            </div>
+        </form>
+
+        </div>
+
+    </div>
+</div>
+

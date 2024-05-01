@@ -1,0 +1,243 @@
+﻿@model AbdullahErolEticaret.Models.KullanicilarT
+@{
+    ViewBag.Title = "Hesabim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="py-5">
+    <h3 class="text-center text-danger">Hesabım</h3>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="justify-content-center">
+            <!-- Tab links -->
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'hesap')">Hesap Ayarları</button>
+                <button class="tablinks" onclick="openCity(event, 'parola')">Parola İşlemleri</button>
+                <button class="tablinks" onclick="openCity(event, 'siparis')">Siparişlerim</button>
+            </div>
+
+            <!-- Tab content -->
+            <div id="hesap" class="tabcontent">
+                <h3>Kişisel Bilgiler</h3>
+                <form action="#">
+                    <div class="form-group">
+                        <label class="form-label">İsim</label>
+                        <input type="text" class="form-control" value="@Model.Isim" id="isim" name="Isim" required />
+                        <p id="isimalert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Eposta</label>
+                        <input type="text" class="form-control" value="@Model.Eposta" id="eposta" name="Eposta" required />
+                        <p id="epostalert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Teslimat Adresi</label>
+                        <input type="text" class="form-control" value="@Model.TeslimatAdresi" id="teslimatadresi" name="TeslimatAdresi" maxlength="500  "/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fatura Adresi</label>
+                        <input type="text" class="form-control" value="@Model.FaturaAdresi" id="faturaAdresi" name="FaturaAdresi" maxlength="500" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" onclick="hesapkaydet()">Kaydet</button>
+                    </div>
+                    <div id="mesajdiv">
+                    </div>
+                </form>
+            </div>
+
+            <div id="parola" class="tabcontent">
+                <h3>Parola Değiştirme</h3>
+                <form action="#">
+                    <div class="form-group">
+                        <label class="form-label">Eski Parolanız</label>
+                        <input type="text" class="form-control" id="eskiParola" name="EskiParola" required />
+                        <p id="eskiParolaAlert"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Yeni Parolanız</label>
+                        <input type="text" class="form-control" id="yeniParola" name="YeniParola" required />
+                        <p id="yeniParolaAlert"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" onclick="sifrekaydet()">Kaydet</button>
+                    </div>
+                    <div id="mesajdivsif">
+                    </div>
+                </form>
+            </div>
+
+            <div id="siparis" class="tabcontent">
+                <h3>Sipariş Geçmişim</h3>
+                <table class="table table-striped table-bordered">
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<script src="~/Content/jquery-3.3.1.min.js"></script>
+<script>
+    var isim = document.getElementById('isim'); //isim idli input
+    var eposta = document.getElementById('eposta'); //eposta idli input
+
+    var isimalert = document.getElementById('isimalert'); //isimalert idli p etiketi
+    var epostalert = document.getElementById('epostalert');//epostalert idli p etiketi
+
+    isim.addEventListener('keyup', isimkontrol);
+    eposta.addEventListener('keyup', epostakontrol);
+    //isim ve eposta inputlarının boş olup olmadğını kontrol etme
+    function isimkontrol(e) {
+        if (isim.value == '') {
+            isimalert.textContent = 'İsim Boş geçilemez';
+            isimalert.style.color = 'red';
+        }
+        else {
+            isimalert.textContent = '';
+        }
+    }
+    function epostakontrol(e) {
+        if (eposta.value == '') {
+            epostalert.textContent = 'Eposta Boş geçilemez';
+            epostalert.style.color = 'red';
+        }
+        else {
+            epostalert.textContent = '';
+        }
+    }
+
+    function hesapkaydet() { //hesapkaydet butonuna basıldığında inputların değerini al ve /home/hesabimkaydet'e gönder.
+        var isim = document.getElementById('isim').value;
+        var eposta = document.getElementById('eposta').value;
+        var teslimatadresi = document.getElementById('teslimatadresi').value;
+        var faturaAdresi = document.getElementById('faturaAdresi').value;
+        $.ajax({
+            url: '/Home/HesabimKaydet',
+            type: 'POST',
+            data: { Isim: isim, Eposta: eposta, TeslimatAdresi: teslimatadresi, FaturaAdresi: faturaAdresi },
+            success: function (result) {
+                $("#mesajdiv").html("<p class='text-success'>" + result.message + "</p>");
+            },
+            error: function (result) {
+                $("#mesajdiv").html("<p class='text-danger'>" + result.responseJSON.message + "</p>");
+            }
+        })
+    }
+
+    //var eskiSif = document.getElementById('eskiParola');
+    //var yeniSif = document.getElementById('yeniParola');
+
+    //eskiSif.addEventListener('keyup', SifKontrol());
+
+    //function SifKontrol(e) {
+    //    if (eskiSif.value != '') {
+    //        yeniSif.removeAttribute('readonly');
+    //    }
+    //    else {
+    //        yeniSif.setAttribute('readonly', true);
+    //    }
+    //}
+
+    function sifrekaydet() {
+        var eskiSif = document.getElementById('eskiParola').value;
+        var yeniSif = document.getElementById('yeniParola').value;
+
+        $.ajax({
+            url: '/Home/SifreKaydet',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8', // İçerik tipini belirtme
+            dataType: 'json', // Dönen veri tipini belirtme
+            data: JSON.stringify({ EskiSifre: eskiSif, YeniSifre: yeniSif }), // Verileri JSON formatında gönder
+            success: function (result) {
+                $("#mesajdivsif").html("<p class='text-success'>" + result.message + "</p>");
+            },
+            error: function (result) {
+                $("#mesajdivsif").html("<p class='text-danger'>" + result.responseJSON.message + "</p>");
+            }
+        });
+    }
+
+    //siparişeri listeleme ajax
+   
+    function Siparislerim() {
+        var drm;
+        var url = '/Home/Siparislerim';
+        $('table').html();
+        var thead = '<thead><tr><th>Siparis ID</th><th>Ürün</th><th>Fiyat</th><th>Tarih</th><th>Teslimat Adresi Ve Fatura Adresi</th><th>Durum</th><th>Fatura</th></tr></thead>';
+        var tfoot = '<tfoot><tr><th>Siparis ID</th><th>Ürün</th><th>Fiyat</th><th>Tarih</th><th>Teslimat Adresi Ve Fatura Adresi</th><th>Durum</th><th>Fatura</th></tr></tfoot>';
+
+        $('table').append(thead);
+        $('table').append(tfoot);
+        $.getJSON(url, function (data) {
+            if (data.Result.length === 0) {
+                // Eğer sipariş listesi boşsa, kullanıcıya bir mesaj göster
+                $('table').append('<tbody><tr><td colspan="6" class="text-center text-danger">Hiç sipariş vermediniz.</td></tr></tbody>');
+            } else {
+                for (var item in data.Result) {
+                    if (data.Result[item].Durum == 1) {
+                        drm = "<label class='text-info'>Sipariş Alındı</label>";
+                    }
+                    else if (data.Result[item].Durum == 2) {
+                        drm = "<label class='text-primary'>Sipariş Hazırlanıyor</label>";
+                    }
+                    else if (data.Result[item].Durum == 3) {
+                        drm = "<label class='text-warning'>Kargoya Verildi</label>";
+                    }
+                    else if (data.Result[item].Durum == 4) {
+                        drm = "<label class='text-success'>Teslimat Tamamlandı</label>";
+                    }
+                    else {
+                        drm = "<label class='text-danger'>İptal Edildi</label>";
+                    }
+
+
+                    var dataTbody = '<tbody><tr><td>' + data.Result[item].SiparisID + '</td><td>' + data.Result[item].UrunAdi + '</td><td>' + data.Result[item].SatisFiyati + "₺" + '</td><td>' + new Date(parseInt(data.Result[item].OlusturmaTarihi.substr(6))).toLocaleDateString() + '</td><td>' + data.Result[item].TeslimatAdresi + " || " + data.Result[item].FaturaAdresi + '</td><td>' + drm + '</td><td><a href="' + data.Result[item].FaturaURL + '" target="_blank" class="btn btn-warning">Ürün Faturası</a></td></tr></tbody>';
+                    $('table').append(dataTbody);
+
+
+
+                }
+
+
+            }
+        });
+
+
+    }
+
+    Siparislerim();
+
+</script>
+
+
+<script>
+
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    var tarih = new Date(); // Tarih nesnesi oluştur
+    var yil = tarih.getFullYear(); // Yıl bilgisini al
+    document.getElementById('yil').textContent = "Copyright © Abdullah EROL 2023 - " + yil;
+</script>

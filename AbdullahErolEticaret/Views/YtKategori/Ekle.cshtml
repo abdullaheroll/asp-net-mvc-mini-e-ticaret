@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Kategori Ekle</h4>
+            <hr />
+            @Html.Raw(ViewBag.msg)
+
+            <form action="/ytkategori/ekle" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="col-md-2 form-label">Kategori Adı</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="Baslik" required maxlength="500"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" form-label col-md-2">Kategori Açıklaması</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="KategoriAciklamasi" required maxlength="1000"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 pt-3">
+                        <button type="submit" class="btn btn-success">Kategoriyi Ekle</button> |
+                        <a href="/ytkategori" class="btn btn-light">Geri Dön</a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+

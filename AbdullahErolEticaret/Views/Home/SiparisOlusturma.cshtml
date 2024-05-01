@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "SiparisOlusturma";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="py-5">
+    <div class="container px-4 card pt-2 pb-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="@ViewBag.UrunGorselURL" alt="Ürün İkonu" class="mb-3 rounded" width="100" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                    <h5>@ViewBag.UrunAdi</h5>
+                    <p>@ViewBag.UrunAciklamasi</p>
+                    <span>@ViewBag.Fiyat₺</span>
+                </div>
+            </div>
+            <div class="col-md-6 card" style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                <form>
+                    <input type="hidden" value="@ViewBag.urunID" name="UrunID" id="urunID" />
+                    <input type="hidden" value="@ViewBag.Fiyat" name="Fiyat" id="fiyat" />
+                    <div class="form-group">
+                        <label for="billingAddress">Fatura Adresi</label>
+                        <input type="text" class="form-control" id="faturaAdresi" name="FaturaAdresi" value="@ViewBag.FaturaAdresi">
+                    </div>
+                    <div class="form-group">
+                        <label for="deliveryAddress">Teslimat Adresi</label>
+                        <input type="text" class="form-control" id="teslimatAdresi" name="TeslimatAdresi" value="@ViewBag.TeslimatAdresi">
+                    </div>
+                    <button type="button" onclick="sipolustur()" class="btn btn-outline-danger btn-block">Satın AL</button>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-4" id="mesaj">
+        </div>
+    </div>
+</section>
+
+<script>
+    function sipolustur() {
+        var faturaAdr = document.getElementById('faturaAdresi');
+        var teslimatAdr = document.getElementById('teslimatAdresi');
+        var urunId = document.getElementById('urunID').value;
+        var fiyat = document.getElementById('fiyat').value;
+        if (faturaAdr.value.length == 0 && teslimatAdr.value.length == 0) {
+            alert('Fatura ve Teslimat Adresinizi Yazınız.');
+        }
+        else {
+            $.ajax({
+                url: '/Home/UrunSatinAl/',
+                type: 'POST',
+                //  dataType: 'json', // Dönen veri tipini belirtin
+                data: { UrunID: urunId, SatisFiyati: fiyat, FaturaAdresi: faturaAdr.value, TeslimatAdresi: teslimatAdr.value },
+                success: function (result) {
+                    $('#mesaj').html("<strong class='text-success'>SİPARİŞİNİZ OLUŞTURULMUŞTUR.</strong ><br /> <strong>Hesabım yerinden siparişinizi görebilirsiniz. Yönlendiriliyorsunuz...</strong>");
+                    setTimeout(function () {
+                        window.location.href = result.redirectUrl;
+                    }, 3000);
+                },
+                error: function (result) {
+                    $('#mesaj').html("<strong class='text-success'>SİPARİŞİNİZ OLUŞTURULMADI.</strong ><br /> <strong>...</strong>");
+                }
+            });
+        }
+    }
+
+
+</script>
+
+<script src="~/Content/jquery-3.3.1.min.js"></script>

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.UrunlerT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Ürünler</h4>
+
+            <hr />
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Mevcut Tüm Ürünler</h6>
+                </div>
+                <a href="/yturun/ekle" class="btn btn-success">Ürün Ekle</a>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped-columns" id="myTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Ürün ID</th>
+                                    <th class="text-center">Ürün Adı</th>
+                                    <th class="text-center">Ürün Fiyatı</th>
+                                    <th class="text-center">Stok Adeti</th>
+                                    <th class="text-center">Kategorisi</th>
+                                    <th class="text-center">Görsel</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center">Ürün ID</th>
+                                    <th class="text-center">Ürün Adı</th>
+                                    <th class="text-center">Ürün Fiyatı</th>
+                                    <th class="text-center">Stok Adeti</th>
+                                    <th class="text-center">Kategorisi</th>
+                                    <th class="text-center">Görsel</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.urunID</td>
+                                        <td class="text-center">@item.UrunAdi</td>
+                                        <td class="text-center">@item.Fiyat</td>
+                                        <td class="text-center">@item.StokAdet</td>
+                                        <td class="text-center">@item.KategoriAdi</td>
+                                        <td class="text-center"><img src="@item.UrunGorselURL" alt="@item.UrunAdi" width="50" /> </td>
+                                        <td class="text-center">
+                                            <a href="/yturun/duzenle/@item.urunID" class="btn btn-info">Düzenle</a> |
+                                            <button id="silid" onclick="sil(@item.urunID)" class="btn btn-danger">Sil</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script src="~/Content/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/datatables.min.js"></script>
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.js"></script>
+<script>
+
+    $('#myTable').dataTable({
+        language: {
+            info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+            infoEmpty: "Gösterilecek hiç kayıt yok.",
+            loadingRecords: "Kayıtlar yükleniyor.",
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+            zeroRecords: "Tablo boş",
+            search: "Arama:",
+            infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+
+            paginate: {
+                first: "İlk",
+                previous: "Önceki",
+                next: "Sonraki",
+                last: "Son"
+            },
+        },
+
+
+    });
+</script>
+
+<script>
+    function sil(id) {
+        if (confirm("Ürünü Silmek İstediğinizden Emin Misiniz?")) {
+
+            $.ajax({
+                url: '/yturun/sil',
+                type: 'POST',
+                data: { id: id },
+                success: function () {
+                    alert('Ürün Silindi.');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('Ürün Silinemedi.');
+                    window.location.reload();
+                }
+            });
+        }
+        else {
+            alert("İşlem İptal Edildi.");
+        }
+    }
+
+</script>

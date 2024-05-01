@@ -1,0 +1,95 @@
+﻿@{
+    if (Convert.ToInt32(Session["rolid"]) == 2 || Session["rolid"] == null)
+    {
+        Response.Redirect("/home");
+    }
+}
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizim Plak | Yönetim Paneli</title>
+    <link href="~/content/yonetim/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="~/content/yonetim/lib/docs.css" rel="stylesheet">
+    <link rel="icon" href="~/Gorsel/favcion.jpeg" type="image/x-icon">
+</head>
+<body>
+    <!--Nav Menü-->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/ytpanel">Bizim Plak | E-Ticaret Yönetim Paneli</a>
+          
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menüler</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/ytpanel">Panel</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                Ürünler
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="/yturun">Tüm Ürünler</a></li>
+                                <li><a class="dropdown-item" href="/ytkategori">Kategoriler</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/ytsiparisler">Siparişler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/ytkullanici">Kullanıcılar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/ytiletisim">Gelen Kutusu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/ythakkimizda">Hakkımızda</a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div class="text-center">
+                    <a href="/" class="btn btn-outline-light">Anasayfaya Git</a>
+                </div>
+                
+                <hr />
+                <h6 class="text-center"> Abdullah EROL</h6>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            @RenderBody()
+        </div>
+        <!--Footer-->
+        <footer class="sticky-footer bg-dark py-5">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto text-white">
+                    <span id="yil"></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>
+<script src="~/content/yonetim/lib/bootstrap.bundle.min.js"></script>
+<script>
+    var tarih = new Date(); // Tarih nesnesi oluştur
+    var yil = tarih.getFullYear(); // Yıl bilgisini al
+    document.getElementById('yil').textContent = "Copyright © Abdullah EROL 2023 - " + yil;
+</script>

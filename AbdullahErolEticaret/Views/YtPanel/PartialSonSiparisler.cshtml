@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.SiparislerT>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td class="text-center">@item.SiparisID</td>
+        <td class="text-center">@item.Isim</td>
+        <td class="text-center">@item.Eposta</td>
+        <td class="text-center">@item.UrunAdi</td>
+        <td class="text-center">@item.SatisFiyati</td>
+        <td class="text-center">@item.TeslimatAdresi</td>
+        <td class="text-center">@item.FaturaAdresi</td>
+        <td class="text-center">@item.OlusturmaTarihi.ToShortDateString()</td>
+        <td class="text-center">
+            @if (item.Durum == "1")
+            {
+                <p class="text-info">Sipariş Alındı</p>
+            }
+
+            else if (item.Durum == "2")
+            {
+                <p class="text-primary">Sipariş Hazırlanıyor</p>
+            }
+            else if (item.Durum == "3")
+            {
+                <p class="text-warning">Kargoya Verildi</p>
+            }
+            else if (item.Durum == "4")
+            {
+                <p class="text-success">Teslim Edildi</p>
+            }
+            else
+            {
+                <p class="text-danger">İptal Edildi</p>
+            }
+        </td>
+        <td class="text-center">
+            <a href="/ytsiparisler/sipdurum/@item.SiparisID" class="btn btn-success">Durum Belirle</a>
+            <a href="/ytsiparisler/fatura/@item.SiparisID" class="btn btn-warning">Fatura Oluştur</a>
+        </td>
+    </tr>
+}
+
+<link rel="stylesheet" type="text/css" href="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/datatables.min.js"></script>
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.js"></script>
+<script>
+
+    $('#myTable').dataTable({
+        language: {
+            info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+            infoEmpty: "Gösterilecek hiç kayıt yok.",
+            loadingRecords: "Kayıtlar yükleniyor.",
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+            zeroRecords: "Tablo boş",
+            search: "Arama:",
+            infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+
+            paginate: {
+                first: "İlk",
+                previous: "Önceki",
+                next: "Sonraki",
+                last: "Son"
+            },
+        },
+
+
+    });
+</script>

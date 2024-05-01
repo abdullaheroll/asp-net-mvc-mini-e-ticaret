@@ -1,0 +1,104 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.IletisimT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Gelen Kutusu</h4>
+
+            <hr />
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Mevcut Tüm Mesajlar</h6>
+                </div>
+            
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped-columns" id="myTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">Eposta</th>
+                                    <th class="text-center">Tarih</th>
+                                    <th class="text-center">İp Adresi</th>
+                                    <th class="text-center">Mesaj İceriği</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">Eposta</th>
+                                    <th class="text-center">Tarih</th>
+                                    <th class="text-center">İp Adresi</th>
+                                    <th class="text-center">Mesaj İceriği</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Isim</td>
+                                        <td class="text-center">@item.Eposta</td>
+                                        <td class="text-center">@item.OlusturmaTarihi.ToShortDateString()</td>
+                                        <td class="text-center">@item.IpAdresi</td>
+                                        <td class="text-center">@item.MesajIcerik</td>
+                                        <td class="text-center">
+                                            <a href="/ytiletisim/sil/@item.MesajID" class="btn btn-danger">Sil</a>
+
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/datatables.min.js"></script>
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.js"></script>
+<script>
+
+    $('#myTable').dataTable({
+        language: {
+            info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+            infoEmpty: "Gösterilecek hiç kayıt yok.",
+            loadingRecords: "Kayıtlar yükleniyor.",
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+            zeroRecords: "Tablo boş",
+            search: "Arama:",
+            infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+
+            paginate: {
+                first: "İlk",
+                previous: "Önceki",
+                next: "Sonraki",
+                last: "Son"
+            },
+        },
+
+
+    });
+</script>
+
+
+

@@ -1,0 +1,5 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.KategorilerT>
+@foreach (var item in Model)
+{
+    <a class="dropdown-item" href="/home/kategoridetay/@item.KategoriID">@item.Baslik</a>
+}

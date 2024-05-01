@@ -1,0 +1,182 @@
+﻿@model IEnumerable<AbdullahErolEticaret.Models.KullanicilarT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Kullanıcılar</h4>
+
+            <hr />
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Sistemde Kayıtlı Tüm Kullanıcılar</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped-columns" id="myTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Kullanıcı ID</th>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">E-posta</th>
+                                    <th class="text-center">Teslimat Adresi</th>
+                                    <th class="text-center">Fatura Adresi</th>
+                                    <th class="text-center">Kayıt Tarihi</th>
+                                    <th class="text-center">Rolü</th>
+                                    <th class="text-center">Aktiflik</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center">Kullanıcı ID</th>
+                                    <th class="text-center">İsim</th>
+                                    <th class="text-center">E-posta</th>
+                                    <th class="text-center">Teslimat Adresi</th>
+                                    <th class="text-center">Fatura Adresi</th>
+                                    <th class="text-center">Kayıt Tarihi</th>
+                                    <th class="text-center">Rolü</th>
+                                    <th class="text-center">Aktiflik</th>
+                                    <th class="text-center">#</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.KullaniciID</td>
+                                        <td class="text-center">@item.Isim</td>
+                                        <td class="text-center">@item.Eposta</td>
+                                        <td class="text-center">@item.TeslimatAdresi</td>
+                                        <td class="text-center">@item.FaturaAdresi</td>
+                                        <td class="text-center">@item.KayitTarihi.ToShortDateString()</td>
+                                        <td class="text-center">
+                                            @if (item.RolID == 1)
+                                            {
+                                                <p>Yönetici</p>
+                                            }
+                                            else if (item.RolID == 2)
+                                            {
+                                                <p>Kullanıcı</p>
+                                            }
+                                            else
+                                            {
+                                                <p id="spr" data-id="3">Süper Yönetici</p>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            @if (item.RolID != 3)
+                                            {
+                                                if (item.Aktiflik == true)
+                                                {
+                                                    <a href="/ytkullanici/pasifet/@item.KullaniciID" class="btn btn-warning">Pasif Et</a>
+                                                }
+
+                                                else
+                                                {
+                                                    <a href="/ytkullanici/aktifet/@item.KullaniciID" class="btn btn-success">Aktif Et</a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p class="text-danger">Yetki Yok!</p>
+                                            }
+
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            @if (item.RolID == 3)
+                                            {
+                                                <p class="text-danger">Yetki Yok!</p>
+                                            }
+                                            else
+                                            {
+                                                <button data-id="@item.KullaniciID" onclick="sil(@item.KullaniciID)" class="btn btn-danger">Sil</button>
+                                                <a href="/ytkullanici/rolata/@item.KullaniciID" class="btn btn-info">Rol Ata</a>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function sil(id) {
+        //const sprid = 3;
+        if (confirm("Bu Kullanıyıcı silerseniz, Kullanıcıya bağlı siparişler görünmez!")) {
+
+            $.ajax({
+                url: '/ytkullanici/sil',
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    alert(result.message);
+                    window.location.reload();
+                },
+                error: function (result) {
+                    alert(result.message);
+                    window.location.reload();
+                   
+                }
+            });
+        }
+        else {
+            alert("İşlem İptal Edildi.");
+        }
+    }
+
+</script>
+<script src="~/content/jquery-3.3.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/datatables.min.js"></script>
+<script type="text/javascript" src="~/content/yonetim/lib/dataTable/dataTables.bootstrap4.min.js"></script>
+<script>
+
+    $('#myTable').dataTable({
+        language: {
+            info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+            infoEmpty: "Gösterilecek hiç kayıt yok.",
+            loadingRecords: "Kayıtlar yükleniyor.",
+            lengthMenu: "Sayfada _MENU_ kayıt göster",
+            zeroRecords: "Tablo boş",
+            search: "Arama:",
+            infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+
+            paginate: {
+                first: "İlk",
+                previous: "Önceki",
+                next: "Sonraki",
+                last: "Son"
+            },
+        },
+
+
+    });
+</script>
+
+

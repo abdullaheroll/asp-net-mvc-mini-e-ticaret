@@ -1,0 +1,64 @@
+﻿@model AbdullahErolEticaret.Models.KullanicilarT
+@{
+    ViewBag.Title = "RolAta";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+
+<div class="container-fluid ">
+
+    <div class="py-5"></div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>@Model.Eposta Kişisine Rol Ata</h4>
+            <hr />
+            @Html.Raw(ViewBag.msg)
+
+            <form action="/ytkullanici/rolata/@Model.KullaniciID" method="post">
+                <div class="form-group">
+                    <label class="col-md-2 form-label">Rolü:</label>
+                    @if (Model.RolID == 1)
+                    {
+                        <p class="h6 text-danger">Yönetici</p>
+                        <hr style="width:500px" />
+                    }
+
+                    else if (Model.RolID == 2)
+                    {
+                        <p class="h6 text-info">Kullanıcı</p>
+                    }
+                    else
+                    {
+                        <p>Hata!</p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 form-label">Rol Seç:</label>
+                    <div class="col-md-4">
+
+                        <select name="RolID" class="form-control">
+                            <option value="1">
+                                Yönetici
+                            </option>
+                            <option value="2">
+                                Kullanıcı
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 pt-3">
+                        <button type="submit" class="btn btn-success">Kaydet</button> |
+                        <a href="/ytkullanici" class="btn btn-light">Geri Dön</a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+

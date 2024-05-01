@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Iletisim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .contact-form {
+        border-right: 1px solid black;
+        height:400px;
+    }
+
+    .iletisim-foto {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        margin-top:-4px;
+    }
+    .label {
+        text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        font-style:oblique;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 contact-form">
+            <img src="~/Gorsel/iletisim.png" alt="Görsel" class="img-fluid iletisim-foto">
+        </div>
+        <div class="col-md-6">
+
+            <h2 class="text-info label">İLETİŞİME GEÇİN</h2>
+            <form action="/home/iletisim" method="post">
+               @Html.Raw(ViewBag.msj)
+                <div class="form-group">
+                    <label for="name" class="label">isim:</label>
+                    <input type="text" class="form-control" name="Isim" required maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="label">E-posta:</label>
+                    <input type="email" class="form-control" name="Eposta" required maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="label">Mesajınız:</label>
+                    <textarea class="form-control" name="MesajIcerik" rows="3" required maxlength="1000"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-outline-dark">GÖNDER</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
