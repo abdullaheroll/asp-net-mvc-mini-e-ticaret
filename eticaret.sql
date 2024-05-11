@@ -107,7 +107,7 @@ CREATE TABLE `kullanicilart` (
 --
 
 INSERT INTO `kullanicilart` (`KullaniciID`, `Isim`, `Eposta`, `Parola`, `Aktiflik`, `KayitTarihi`, `RolID`, `TeslimatAdresi`, `FaturaAdresi`) VALUES
-(1, 'Abdulah EROL', 'info@abdullaherol.com', 'apo', 1, '2024-02-01', 1, 'Dunaysır Mahallesi Tandoğan Caddesi No:52 Kızıltepe/Mardin', 'Dunaysır Mahallesi Tandoğan Caddesi No:52 Kızıltepe/Mardin'),
+(1, 'Abdulah EROL', 'info@abdullaherol.com', 'apo', 1, '2024-02-01', 1, 'Dunaysır Mahallesi Mardin', 'Dunaysır Mahallesi Mardin'),
 (26, 'admin', 'admin', '1234', 1, '2024-03-04', 3, '', ''),
 (128, 'Fatmagül', 'fatmagul@mail.com', 'fatma', 1, '2024-03-18', 2, 'fatma ocağı caddesi bilmemney sokak no:55', 'fatma ocağı caddesi bilmemney sokak no:55');
 
